@@ -12,7 +12,8 @@ from Datasets.create_datasets import (create_datasets,
                                         create_dataloaders)
 from utils.utils import (get_miscellanous_variables,
                         get_device,
-                        model_summary)
+                        model_summary,
+                        visualize_training_metrics)
 from Models.vgg_model import TinyVGG
 from train_val_loops.train_val_functions import train
 import os
@@ -72,3 +73,7 @@ if __name__=="__main__":
     # Running the training loop
     metrics = train(model = model, train_dataloader= train_dataloader, test_dataloader= test_dataloader, optimizer= optim,
         device= device)
+    # Plotting the results
+    visualize_training_metrics(metrics, 5)
+    
+    
