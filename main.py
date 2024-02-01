@@ -11,7 +11,9 @@ from Datasets.preprocessing import (fix_all_transparent_images,
 from Datasets.create_datasets import (create_datasets,
                                         create_dataloaders)
 from utils.utils import (get_miscellanous_variables,
-                        get_device)
+                        get_device,
+                        model_summary)
+from Models.vgg_model import TinyVGG
 import os
 import torch
 
@@ -53,5 +55,13 @@ if __name__=="__main__":
     
     # Choose Device
     device = get_device()
+    
+    # Defining first model
+    vgg_model = TinyVGG(input_shape=3, # number of color channels (3 for RGB)
+                        hidden_units=10,
+                        output_shape=len(train_data.classes)).to(device)
+    
+    # Getting the model summary
+    print(model_summary(vgg_model, [1, 3, 256, 256]))
     
     

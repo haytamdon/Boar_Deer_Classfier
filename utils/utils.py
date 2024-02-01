@@ -1,4 +1,6 @@
 import torch
+import torchinfo
+from torchinfo import summary
 
 def get_miscellanous_variables(train_data):
     class_names = train_data.classes
@@ -8,3 +10,6 @@ def get_miscellanous_variables(train_data):
 def get_device():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     return device
+
+def model_summary(model, tensor_size):
+    return summary(model, input_size=tensor_size)
