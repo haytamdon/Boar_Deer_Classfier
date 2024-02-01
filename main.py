@@ -14,6 +14,13 @@ from utils.utils import (get_miscellanous_variables,
                         get_device,
                         model_summary,
                         visualize_training_metrics)
+from Models.efficient_net_model import (get_efficient_net_model_weights,
+                                        get_model_summary,
+                                        get_model_transforms,
+                                        get_state_dict,
+                                        load_state_dict_from_url,
+                                        summary,
+                                        update_model)
 from Models.vgg_model import TinyVGG
 from train_val_loops.train_val_functions import train
 import os
@@ -77,4 +84,17 @@ if __name__=="__main__":
     # Plotting the results
     visualize_training_metrics(metrics, 5)
     
+    # New model Efficient Net
+    eff_net_weights = get_efficient_net_model_weights() # We get the model weights
+    efficient_net_transforms = get_model_transforms(eff_net_weights) # We get the model transforms
+    # Recreating the datasets with the updated transforms
+    train_data, test_data = create_datasets(train_dir= train_dir_path,
+                    test_dir= test_dir_path,
+                    train_transform= efficient_net_transforms,
+                    # We use the same transforms of the trainset
+                    # in the testset since there are no data augmentations
+                    test_transform= efficient_net_transforms)
+    # We recreated the dataloaders
+    train_dataloader, test_dataloader = create_dataloaders(train_data, test_data)
+    class_names, class_dict = get_miscellanous_variables(train_data)
     
