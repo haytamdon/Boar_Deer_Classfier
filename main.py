@@ -8,6 +8,9 @@ from Datasets.organising_data import (copy_images_to_appropriate_folder,
                                     split_train_test_images)
 from Datasets.preprocessing import (fix_all_transparent_images,
                                     prepare_transforms)
+from Datasets.create_datasets import (create_datasets,
+                                        create_dataloaders,
+                                        get_miscellanous_variables)
 import os
 import torch
 
@@ -40,4 +43,10 @@ if __name__=="__main__":
     fix_all_transparent_images(train_dir_path, test_dir_path, image_types)
     train_transform, test_transform = prepare_transforms()
     
+    # Create datasets
+    train_data, test_data = create_datasets(train_dir_path, test_dir_path, train_transform, test_transform)
+    class_names, class_dict = get_miscellanous_variables(train_data)
+    
+    # Create dataloaders
+    train_dataloader, test_dataloader = create_dataloaders(train_data, test_data, 32)
     
