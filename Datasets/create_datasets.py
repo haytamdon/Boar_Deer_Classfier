@@ -18,14 +18,14 @@ def get_miscellanous_variables(train_data):
     class_dict = train_data.class_to_idx
     return class_names, class_dict
 
-def create_dataloaders(train_data, test_data):
+def create_dataloaders(train_data, test_data, batch_size):
     train_dataloader = DataLoader(dataset=train_data,
-                                    batch_size=32,
+                                    batch_size=batch_size,
                                     num_workers=2,
                                     shuffle=True)
 
     test_dataloader = DataLoader(dataset=test_data,
-                                batch_size=32,
+                                batch_size=batch_size,
                                 num_workers=2 ,
                                 shuffle=False)
 
