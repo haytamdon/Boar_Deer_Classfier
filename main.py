@@ -1,4 +1,11 @@
-from Download_data.data_download import get_links, download_images, remove_corrupted_images, create_dataframe, export_df
+from Download_data.data_download import (get_links, 
+                                        download_images, 
+                                        remove_corrupted_images, 
+                                        create_dataframe, 
+                                        export_df)
+from Datasets.organising_data import (copy_images_to_appropriate_folder, 
+                                    create_folders, 
+                                    split_train_test_images)
 import os
 import torch
 
@@ -21,3 +28,8 @@ if __name__=="__main__":
         remove_corrupted_images(dir_path= os.path.join(work_dir, image_type))
     image_data = create_dataframe(image_types, work_dir)
     export_df(image_data, work_dir)
+    
+    # Organising the downloaded data
+    create_folders(image_types, train_dir_path, test_dir_path)
+    df_train, df_test = split_train_test_images(image_data)
+    copy_images_to_appropriate_folder(df_train, df_test, train_dir_path, test_dir_path, image_types)
