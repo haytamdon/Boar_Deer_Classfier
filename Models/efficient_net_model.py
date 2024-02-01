@@ -3,6 +3,8 @@ import torchvision
 import torchinfo
 from torchinfo import summary
 from torch.hub import load_state_dict_from_url
+from torchvision.models import efficientnet_b5, EfficientNet_B5_Weights
+from torchvision.models._api import WeightsEnum
 
 def get_efficient_net_model_weights():
     """
@@ -63,4 +65,11 @@ def update_model(model, class_names, device):
         torch.nn.Linear(in_features=2048,
                         out_features=output_shape,
                         bias=True)).to(device)
+    return model
+
+def define_model():
+    WeightsEnum.get_state_dict = get_state_dict
+    efficientnet_b5(weights=EfficientNet_B5_Weights.IMAGENET1K_V1)
+    # We load the model into the device "cuda"
+    model = efficientnet_b5(weights="DEFAULT")
     return model
