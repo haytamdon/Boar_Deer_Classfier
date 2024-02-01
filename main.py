@@ -14,6 +14,7 @@ from utils.utils import (get_miscellanous_variables,
                         get_device,
                         model_summary)
 from Models.vgg_model import TinyVGG
+from train_val_loops.train_val_functions import train
 import os
 import torch
 
@@ -59,9 +60,15 @@ if __name__=="__main__":
     # Defining first model
     vgg_model = TinyVGG(input_shape=3, # number of color channels (3 for RGB)
                         hidden_units=10,
-                        output_shape=len(train_data.classes)).to(device)
+                        output_shape=len(train_data.classes))
     
     # Getting the model summary
     print(model_summary(vgg_model, [1, 3, 256, 256]))
     
-    
+    # Loading the model into the device
+    model = vgg_model.to(device)
+    # Defining the optimiser
+    optim = torch.optim.SGD(params= model.parameters(), lr=0.001)
+    # Running the training loop
+    metrics = train(model = model, train_dataloader= train_dataloader, test_dataloader= test_dataloader, optimizer= optim,
+        device= device)
