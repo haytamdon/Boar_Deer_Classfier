@@ -9,8 +9,9 @@ from Datasets.organising_data import (copy_images_to_appropriate_folder,
 from Datasets.preprocessing import (fix_all_transparent_images,
                                     prepare_transforms)
 from Datasets.create_datasets import (create_datasets,
-                                        create_dataloaders,
-                                        get_miscellanous_variables)
+                                        create_dataloaders)
+from utils.utils import (get_miscellanous_variables,
+                        get_device)
 import os
 import torch
 
@@ -50,3 +51,5 @@ if __name__=="__main__":
     # Create dataloaders
     train_dataloader, test_dataloader = create_dataloaders(train_data, test_data, 32)
     
+    # Choose Device
+    device = get_device()

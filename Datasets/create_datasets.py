@@ -13,11 +13,6 @@ def create_datasets(train_dir, test_dir, train_transform, test_transform):
 
     return train_data, test_data
 
-def get_miscellanous_variables(train_data):
-    class_names = train_data.classes
-    class_dict = train_data.class_to_idx
-    return class_names, class_dict
-
 def create_dataloaders(train_data, test_data, batch_size):
     train_dataloader = DataLoader(dataset=train_data,
                                     batch_size=batch_size,
