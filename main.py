@@ -73,6 +73,7 @@ if __name__=="__main__":
     # Running the training loop
     metrics = train(model = model, train_dataloader= train_dataloader, test_dataloader= test_dataloader, optimizer= optim,
         device= device)
+    
     # Plotting the results
     visualize_training_metrics(metrics, 5)
     
