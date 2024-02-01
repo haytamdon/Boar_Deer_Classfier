@@ -6,6 +6,8 @@ from Download_data.data_download import (get_links,
 from Datasets.organising_data import (copy_images_to_appropriate_folder, 
                                     create_folders, 
                                     split_train_test_images)
+from Datasets.preprocessing import (fix_all_transparent_images,
+                                    prepare_transforms)
 import os
 import torch
 
@@ -33,3 +35,9 @@ if __name__=="__main__":
     create_folders(image_types, train_dir_path, test_dir_path)
     df_train, df_test = split_train_test_images(image_data)
     copy_images_to_appropriate_folder(df_train, df_test, train_dir_path, test_dir_path, image_types)
+    
+    # Preprocess data
+    fix_all_transparent_images(train_dir_path, test_dir_path, image_types)
+    train_transform, test_transform = prepare_transforms()
+    
+    
