@@ -1,0 +1,16 @@
+wget
+torchinfo
+gradio
+pandas
+requests
+urllib3
+pillow
+numpy
+albumentations
+torch
+torchvision
+sklearn
+tqdm
+matplotlib
+seaborn
+typing
