@@ -21,3 +21,20 @@ def visualize_training_metrics(metrics, num_epochs):
     sns.lineplot(y= metrics["test_acc"], x= [i for i in range(num_epochs)], label= "test_acc")
     plt.xlabel("epochs")
     plt.ylabel("accuracy")
+    
+def log_tensorboard(writer ,train_loss, train_acc, test_loss, test_acc, epoch):
+    """
+    We store all the metrics into the tensorboard
+
+    Args:
+        writer: the summarywrite that we'll use to store and monitor the metrics
+        train_loss (float): the training loss of the epoch
+        train_acc (float): the training accuracy of the epoch
+        test_loss (float): the test loss of the epoch
+        test_acc (float): the test accuracy of the epoch
+        epoch (int): the current epoch
+    """
+    writer.add_scalar("Train_Loss", train_loss, epoch)
+    writer.add_scalar("Train_Accuracy", train_acc)
+    writer.add_scalar('Test_Accuracy', test_acc, epoch)
+    writer.add_scalar('Test_loss', test_loss, epoch)
