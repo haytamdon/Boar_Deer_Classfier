@@ -26,6 +26,7 @@ from Models.vgg_model import TinyVGG
 from train_val_loops.train_val_functions import train
 import os
 import torch
+from torch import nn
 
 if __name__=="__main__":
     # Creating Necessary Variables
@@ -107,3 +108,7 @@ if __name__=="__main__":
     # Summary of model after updating the classifier the block
     get_model_summary(model)
     
+    # Defining Loss function
+    loss_fn = nn.CrossEntropyLoss()
+    # Defining optimizer
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
