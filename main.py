@@ -14,7 +14,8 @@ from utils.utils import (get_miscellanous_variables,
                         get_device,
                         model_summary,
                         visualize_training_accuracy,
-                        visualize_training_loss)
+                        visualize_training_loss,
+                        compute_f1_score)
 from Models.efficient_net_model import (get_efficient_net_model_weights,
                                         get_model_summary,
                                         get_model_transforms,
@@ -126,4 +127,9 @@ if __name__=="__main__":
     # Visualize results
     visualize_training_accuracy(results, num_epochs) # Plotting Accuracy
     visualize_training_loss(results, num_epochs) # Plotting loss
+    
+    # Compute F1 score
+    F1_score = compute_f1_score(model,
+                                test_dataloader,
+                                device)
     
