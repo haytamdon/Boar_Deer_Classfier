@@ -20,7 +20,8 @@ from Models.efficient_net_model import (get_efficient_net_model_weights,
                                         get_state_dict,
                                         load_state_dict_from_url,
                                         summary,
-                                        update_model)
+                                        update_model,
+                                        define_model)
 from Models.vgg_model import TinyVGG
 from train_val_loops.train_val_functions import train
 import os
@@ -97,4 +98,12 @@ if __name__=="__main__":
     # We recreated the dataloaders
     train_dataloader, test_dataloader = create_dataloaders(train_data, test_data)
     class_names, class_dict = get_miscellanous_variables(train_data)
+    
+    # efficient model definition
+    model = define_model()
+    model = model.to(device)
+    
+    model = update_model(model, class_names, device)
+    # Summary of model after updating the classifier the block
+    get_model_summary(model)
     
