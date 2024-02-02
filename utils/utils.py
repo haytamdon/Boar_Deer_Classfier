@@ -71,4 +71,4 @@ def compute_f1_score(model, test_dataloader, device):
 
     # Calculating F1 score
     f1 = f1_score(all_true_labels, all_predictions, average='macro')
-    return f1
+    return f1, all_true_labels, all_predictions

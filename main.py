@@ -129,7 +129,9 @@ if __name__=="__main__":
     visualize_training_loss(results, num_epochs) # Plotting loss
     
     # Compute F1 score
-    F1_score = compute_f1_score(model,
+    F1_score, all_true_labels, all_predictions = compute_f1_score(model,
                                 test_dataloader,
                                 device)
+    print(F1_score)
+    
     
