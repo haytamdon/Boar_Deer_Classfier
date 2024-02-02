@@ -15,7 +15,9 @@ from utils.utils import (get_miscellanous_variables,
                         model_summary,
                         visualize_training_accuracy,
                         visualize_training_loss,
-                        compute_f1_score)
+                        compute_f1_score,
+                        compute_confusion_matrix,
+                        plot_confusion_matrix)
 from Models.efficient_net_model import (get_efficient_net_model_weights,
                                         get_model_summary,
                                         get_model_transforms,
@@ -134,4 +136,8 @@ if __name__=="__main__":
                                 device)
     print(F1_score)
     
+    # Computing the confusion matrix
+    conf_matrix = compute_confusion_matrix(all_true_labels, all_predictions)
     
+    # Plot confusion matrix
+    plot_confusion_matrix(conf_matrix)
