@@ -13,7 +13,8 @@ from Datasets.create_datasets import (create_datasets,
 from utils.utils import (get_miscellanous_variables,
                         get_device,
                         model_summary,
-                        visualize_training_metrics)
+                        visualize_training_accuracy,
+                        visualize_training_loss)
 from Models.efficient_net_model import (get_efficient_net_model_weights,
                                         get_model_summary,
                                         get_model_transforms,
@@ -82,7 +83,8 @@ if __name__=="__main__":
         device= device)
     
     # Plotting the results
-    visualize_training_metrics(metrics, 5)
+    visualize_training_accuracy(metrics, 5) # Plotting Accuracy
+    visualize_training_loss(metrics, 5) # Plotting loss
     
     # New model Efficient Net
     eff_net_weights = get_efficient_net_model_weights() # We get the model weights
@@ -111,10 +113,15 @@ if __name__=="__main__":
     # Defining optimizer
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
     
+    # definining number of epochs
+    num_epochs = 10
     # Training the model
     results = train_advanced(model= model,
         train_dataloader= train_dataloader,
         test_dataloader= test_dataloader,
         optimizer= optimizer,
         device= device,
-        epochs= 10)
+        epochs= num_epochs)
+    
+    # Visualize results
+    

@@ -16,12 +16,19 @@ def get_device():
 def model_summary(model, tensor_size):
     return summary(model, input_size=tensor_size)
 
-def visualize_training_metrics(metrics, num_epochs):
+def visualize_training_accuracy(metrics, num_epochs):
+    sns.lineplot(y= metrics["train_acc"], x= [i for i in range(num_epochs)], label= "train_acc")
+    sns.lineplot(y= metrics["test_acc"], x= [i for i in range(num_epochs)], label= "test_acc")
+    plt.xlabel("epochs")
+    plt.ylabel("accuracy")
+
+def visualize_training_loss(metrics, num_epochs):
     sns.lineplot(y= metrics["train_acc"], x= [i for i in range(num_epochs)], label= "train_acc")
     sns.lineplot(y= metrics["test_acc"], x= [i for i in range(num_epochs)], label= "test_acc")
     plt.xlabel("epochs")
     plt.ylabel("accuracy")
     
+
 def log_tensorboard(writer ,train_loss, train_acc, test_loss, test_acc, epoch):
     """
     We store all the metrics into the tensorboard
