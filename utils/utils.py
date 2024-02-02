@@ -23,13 +23,14 @@ def visualize_training_accuracy(metrics, num_epochs):
     sns.lineplot(y= metrics["test_acc"], x= [i for i in range(num_epochs)], label= "test_acc")
     plt.xlabel("epochs")
     plt.ylabel("accuracy")
+    plt.show()
 
 def visualize_training_loss(metrics, num_epochs):
     sns.lineplot(y= metrics["train_acc"], x= [i for i in range(num_epochs)], label= "train_acc")
     sns.lineplot(y= metrics["test_acc"], x= [i for i in range(num_epochs)], label= "test_acc")
     plt.xlabel("epochs")
     plt.ylabel("accuracy")
-    
+    plt.show()
 
 def log_tensorboard(writer ,train_loss, train_acc, test_loss, test_acc, epoch):
     """
