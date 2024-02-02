@@ -1,6 +1,9 @@
 import torch
 from torch import nn
 from tqdm import tqdm
+import os
+from torch.utils.tensorboard import SummaryWriter
+from ..utils.utils import log_tensorboard
 
 def train_fn(loader, model, optimizer, loss_fn, device):
     """
@@ -106,3 +109,60 @@ def train(model: torch.nn.Module,
 
     return results
 
+def train_advanced(model: torch.nn.Module,
+                    train_dataloader: torch.utils.data.DataLoader,
+                    test_dataloader: torch.utils.data.DataLoader,
+                    optimizer: torch.optim.Optimizer,
+                    device: str,
+                    dir_path: str = "/content/drive/MyDrive/Sopra Steria Next TA",
+                    loss_fn: torch.nn.Module = nn.CrossEntropyLoss(),
+                    epochs: int = 5):
+
+    results = {"train_loss": [],
+        "train_acc": [],
+        "test_loss": [],
+        "test_acc": []
+    }
+
+    for epoch in tqdm(range(epochs)):
+        train_loss, train_acc = train_fn(model=model,
+                                        loader=train_dataloader,
+                                        loss_fn=loss_fn,
+                                        optimizer=optimizer,
+                                        device = device)
+        test_loss, test_acc = val_fn(model=model,
+                                    loader=test_dataloader,
+                                    loss_fn=loss_fn,
+                                    device= device)
+
+        print(
+            f"Epoch: {epoch+1} | "
+            f"train_loss: {train_loss:.4f} | "
+            f"train_acc: {train_acc:.4f} | "
+            f"test_loss: {test_loss:.4f} | "
+            f"test_acc: {test_acc:.4f}"
+        )
+
+        # Update results dictionary
+        results["train_loss"].append(train_loss)
+        results["train_acc"].append(train_acc)
+        results["test_loss"].append(test_loss)
+        results["test_acc"].append(test_acc)
+
+        # Checkpointing the model
+        weights_dir = os.path.join(dir_path,"checkpoints") 
+        os.makedirs(weights_dir, exist_ok=True) # Creating a checkpoint folder
+        weights_path = os.path.join(weights_dir, "best-model-parameters.pth")
+        best_score = 0
+        if test_acc >= best_score:  # if on this epoch the model surpasses the 
+                                    #previous ones we overwrite the previous checkpoint
+            best_score = test_acc
+            torch.save(model.state_dict(), weights_path)
+        #Logging the losses & metrics of the model in TensorBoard
+        board_dir = os.path.join(dir_path,"runs", "Logger")
+        os.makedirs(board_dir, exist_ok=True)
+        writer = SummaryWriter(board_dir)
+        log_tensorboard(writer, train_loss, train_acc, test_loss, test_acc, epoch)
+
+    # Return the filled results at the end of the epochs
+    return results
