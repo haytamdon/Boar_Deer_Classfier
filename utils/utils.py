@@ -72,3 +72,17 @@ def compute_f1_score(model, test_dataloader, device):
     # Calculating F1 score
     f1 = f1_score(all_true_labels, all_predictions, average='macro')
     return f1, all_true_labels, all_predictions
+
+def compute_confusion_matrix(all_true_labels, all_predictions):
+    conf_matrix = confusion_matrix(all_true_labels, all_predictions)
+    return conf_matrix
+
+def plot_confusion_matrix(conf_matrix):
+    # Ploting confusion matrix using seaborn and matplotlib
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
+                xticklabels=range(2), yticklabels=range(2))
+    plt.xlabel('Predicted')
+    plt.ylabel('True')
+    plt.title('Confusion Matrix')
+    plt.show()
