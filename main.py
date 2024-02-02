@@ -17,13 +17,11 @@ from utils.utils import (get_miscellanous_variables,
 from Models.efficient_net_model import (get_efficient_net_model_weights,
                                         get_model_summary,
                                         get_model_transforms,
-                                        get_state_dict,
-                                        load_state_dict_from_url,
-                                        summary,
                                         update_model,
                                         define_model)
 from Models.vgg_model import TinyVGG
-from train_val_loops.train_val_functions import train
+from train_val_loops.train_val_functions import (train,
+                                                train_advanced)
 import os
 import torch
 from torch import nn
@@ -112,3 +110,11 @@ if __name__=="__main__":
     loss_fn = nn.CrossEntropyLoss()
     # Defining optimizer
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+    
+    # Training the model
+    results = train_advanced(model= model,
+        train_dataloader= train_dataloader,
+        test_dataloader= test_dataloader,
+        optimizer= optimizer,
+        device= device,
+        epochs= 10)
