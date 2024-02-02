@@ -124,4 +124,6 @@ if __name__=="__main__":
         epochs= num_epochs)
     
     # Visualize results
+    visualize_training_accuracy(results, num_epochs) # Plotting Accuracy
+    visualize_training_loss(results, num_epochs) # Plotting loss
     
